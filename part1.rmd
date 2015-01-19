@@ -5,6 +5,9 @@ date: "January 18, 2015"
 output: html_document
 ---
 
+Exponential distribution CLT
+----------------------------
+
 Compare the distribution of 1000 exponentials
 
 ```{r}
@@ -23,8 +26,23 @@ hist(mns)
 
 Notice how the distribution of the 1000 **averages** of random exponentials appears to be approximately normal.  Also note that its mean appears to be the mean of the 1000 generated random exponentials.
 
-What is the sample mean of this distribution?
+Sample and theoretical means
+----------------------------
+
+What is the sample mean of the distribution?
 
 ```{r}
 mean(mns)
+```
+
+The theoretical mean of exponential distribution is 1/lambda:
+
+```{r}
+1/lambda
+```
+
+They differ by only
+
+```{r}
+abs(mean(mns) - 1/lambda)
 ```
