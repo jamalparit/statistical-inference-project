@@ -5,8 +5,12 @@ date: "January 18, 2015"
 output: html_document
 ---
 
-Exponential distribution CLT
-----------------------------
+Overview
+--------
+In this project, we will illustrate how the Central Limit Theorem holds for the exponential distribution.  We will not *prove* this, but illustrate it with plots.
+
+Simulations
+-----------
 
 Compare the distribution of 1000 exponentials
 
@@ -26,8 +30,8 @@ hist(mns)
 
 Notice how the distribution of the 1000 **averages** of random exponentials appears to be approximately normal.  Also note that its mean appears to be the mean of the 1000 generated random exponentials.
 
-Sample and theoretical means
-----------------------------
+Sample Mean versus Theoretical Mean
+-----------------------------------
 
 What is the sample mean of the distribution?
 
@@ -74,8 +78,8 @@ They also differ by less than 1%:
 abs(sample.var - theoretical.var) / theoretical.var
 ```
 
-Distribution is approximately normal
-------------------------------------
+Distribution
+------------
 
 We now illustrate that the distribution is approximately normal.
 
@@ -88,10 +92,10 @@ dat <- data.frame(
                      nosim), 1, cfunc, 10),
         apply(matrix(rexp(nosim * 20, lambda), 
                      nosim), 1, cfunc, 20),
-        apply(matrix(rexp(nosim * 30, lambda), 
-                     nosim), 1, cfunc, 30)
+        apply(matrix(rexp(nosim * 40, lambda), 
+                     nosim), 1, cfunc, 40)
         ),
-  size = factor(rep(c(10, 20, 30), rep(nosim, 3))))
+  size = factor(rep(c(10, 20, 40), rep(nosim, 3))))
 g <- ggplot(dat, aes(x = x, fill = size)) + geom_histogram(binwidth=.3, colour = "black", aes(y = ..density..)) 
 g <- g + stat_function(fun = dnorm, size = 2)
 g + facet_grid(. ~ size)
