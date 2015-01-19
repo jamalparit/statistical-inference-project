@@ -19,4 +19,4 @@ for (i in 1 : 1000) mns = c(mns, mean(runif(40)))
 hist(mns)
 ```
 
-Notice how the the distribution of the 1000 generated random uniforms is thinner compared to the distribution of the 100 **averages** of random uniforms
+Notice how the the distribution of the 1000 generated random uniforms is wider compared to the distribution of the 100 **averages** of random uniforms
