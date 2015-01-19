@@ -35,14 +35,39 @@ What is the sample mean of the distribution?
 mean(mns)
 ```
 
-The theoretical mean of exponential distribution is 1/lambda:
+The theoretical mean of the exponential distribution is 1/lambda:
 
 ```{r}
 1/lambda
 ```
 
-They differ by only
+They differ by less than 1%:
 
 ```{r}
-abs(mean(mns) - 1/lambda)
+abs(mean(mns) - 1/lambda) / (1/lambda)
+```
+
+Sample and theoretical variances
+--------------------------------
+
+What is the sample variance of the distribution?
+
+```{r}
+vars = NULL
+for (i in 1 : 1000) vars = c(vars, var(rexp(40, lambda)))
+sample.var <- mean(vars)
+sample.var
+```
+
+The theoretical standard deviation of the exponential distribution is 1/lambda.  So the variance is the square of this:
+
+```{r}
+theoretical.var <- (1/lambda)^2
+theoretical.var
+```
+
+They also differ by less than 1%:
+
+```{r}
+abs(sample.var - theoretical.var) / theoretical.var
 ```
