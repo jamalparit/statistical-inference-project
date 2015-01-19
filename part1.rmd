@@ -32,19 +32,21 @@ Sample and theoretical means
 What is the sample mean of the distribution?
 
 ```{r}
-mean(mns)
+sample.mean <- mean(mns)
+sample.mean
 ```
 
 The theoretical mean of the exponential distribution is 1/lambda:
 
 ```{r}
-1/lambda
+theoretical.mean <- 1/lambda
+theoretical.mean
 ```
 
 They differ by less than 1%:
 
 ```{r}
-abs(mean(mns) - 1/lambda) / (1/lambda)
+abs(sample.mean - theoretical.mean) / theoretical.mean
 ```
 
 Sample and theoretical variances
@@ -70,4 +72,27 @@ They also differ by less than 1%:
 
 ```{r}
 abs(sample.var - theoretical.var) / theoretical.var
+```
+
+Distribution is approximately normal
+------------------------------------
+
+We now illustrate that the distribution is approximately normal.
+
+```{r}
+library("ggplot2")
+nosim <- 1000
+cfunc <- function(x, n) sqrt(n) * (mean(x) - theoretical.mean) / sqrt(theoretical.var) 
+dat <- data.frame(
+  x = c(apply(matrix(rexp(nosim * 10, lambda), 
+                     nosim), 1, cfunc, 10),
+        apply(matrix(rexp(nosim * 20, lambda), 
+                     nosim), 1, cfunc, 20),
+        apply(matrix(rexp(nosim * 30, lambda), 
+                     nosim), 1, cfunc, 30)
+        ),
+  size = factor(rep(c(10, 20, 30), rep(nosim, 3))))
+g <- ggplot(dat, aes(x = x, fill = size)) + geom_histogram(binwidth=.3, colour = "black", aes(y = ..density..)) 
+g <- g + stat_function(fun = dnorm, size = 2)
+g + facet_grid(. ~ size)
 ```
