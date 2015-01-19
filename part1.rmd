@@ -1,0 +1,22 @@
+---
+title: "Statistical Inference Project: A simulation exercise"
+author: "Paul Reiners"
+date: "January 18, 2015"
+output: html_document
+---
+
+Compare the distribution of 1000 random uniforms
+
+```{r}
+hist(runif(1000))
+```
+
+and the distribution of 1000 averages of 40 random uniforms
+
+```{r}
+mns = NULL
+for (i in 1 : 1000) mns = c(mns, mean(runif(40)))
+hist(mns)
+```
+
+Notice how the the distribution of the 1000 generated random uniforms is thinner compared to the distribution of the 100 **averages** of random uniforms
