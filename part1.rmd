@@ -22,3 +22,9 @@ hist(mns)
 ```
 
 Notice how the distribution of the 1000 **averages** of random exponentials appears to be approximately normal.  Also note that its mean appears to be the mean of the 1000 generated random exponentials.
+
+What is the sample mean of this distribution?
+
+```{r}
+mean(mns)
+```
