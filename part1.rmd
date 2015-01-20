@@ -81,7 +81,7 @@ abs(sample.var - theoretical.var) / theoretical.var
 Distribution
 ------------
 
-We now illustrate that the distribution is approximately normal.
+We now illustrate that the distribution is approximately standard normal.
 
 ```{r}
 library("ggplot2")
