@@ -5,18 +5,37 @@ date: "Tuesday, January 20, 2015"
 output: html_document
 ---
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
 ```{r}
-summary(cars)
+vc.supp <- ToothGrowth[ToothGrowth$supp == "VC",]
+plot(vc.supp$dose, vc.supp$len, main="len ~ dose", 
+     xlab="dose", ylab="len", pch=19)
+lines(lowess(vc.supp$len~vc.supp$dose))
+oj.supp <- ToothGrowth[ToothGrowth$supp == "OJ",]
+points(oj.supp$dose, oj.supp$len,
+     xlab="dose", ylab="len", pch=19, col=2)
+lines(lowess(oj.supp$len~oj.supp$dose), col=2)
 ```
 
-You can also embed plots, for example:
+We can see that as the dosage is increased, the tooth growth increases.  We can also see that for dosages of 0.5 and 1.0, OJ causes more tooth growth than VC.  For a dose of 2.0, the growth seems about the same.
 
-```{r, echo=FALSE}
-plot(cars)
+Let's look at the six 95% confidence intervals over supp type and dosage.
+
+    supp: VC
+    dose: 0.5
+```{r}
+vc.05 <- ToothGrowth[ToothGrowth$supp == "VC" & ToothGrowth$dose == 0.5,]
+vc.05.mean <- mean(vc.05$len)
+vc.05.s <- sd(vc.05$len)
+vc.05.n <- dim(vc.05)[1]
+vc.05.mean + c(-1, 1) * qt(.975, vc.05.n-1) * vc.05.s / sqrt(vc.05.n)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+    supp: OJ
+    dose: 0.5
+```{r}
+oj.05 <- ToothGrowth[ToothGrowth$supp == "OJ" & ToothGrowth$dose == 0.5,]
+oj.05.mean <- mean(oj.05$len)
+oj.05.s <- sd(oj.05$len)
+oj.05.n <- dim(oj.05)[1]
+oj.05.mean + c(-1, 1) * qt(.975, oj.05.n-1) * oj.05.s / sqrt(oj.05.n)
+```
