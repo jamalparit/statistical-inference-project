@@ -20,22 +20,25 @@ We can see that as the dosage is increased, the tooth growth increases.  We can 
 
 Let's look at the six 95% confidence intervals over supp type and dosage.
 
-    supp: VC
-    dose: 0.5
+
 ```{r}
-vc.05 <- ToothGrowth[ToothGrowth$supp == "VC" & ToothGrowth$dose == 0.5,]
-vc.05.mean <- mean(vc.05$len)
-vc.05.s <- sd(vc.05$len)
-vc.05.n <- dim(vc.05)[1]
-vc.05.mean + c(-1, 1) * qt(.975, vc.05.n-1) * vc.05.s / sqrt(vc.05.n)
+supps = c("VC", "OJ")
+doses = c(0.5, 1.0, 2.0)
+for (i in 1:length(supps)) {
+  supp = supps[i]
+  for (j in 1:length(doses)) {
+    dose = doses[j]
+    growth <- ToothGrowth[ToothGrowth$supp == supp & ToothGrowth$dose == dose,]
+    growth.mean <- mean(growth$len)
+    growth.s <- sd(growth$len)
+    growth.n <- dim(growth)[1]
+    
+    print(noquote(paste(supp, dose, sep = " ")))
+    print(growth.mean + c(-1, 1) * qt(.975, growth.n-1) * growth.s / sqrt(growth.n))
+  }
+}
 ```
 
-    supp: OJ
-    dose: 0.5
-```{r}
-oj.05 <- ToothGrowth[ToothGrowth$supp == "OJ" & ToothGrowth$dose == 0.5,]
-oj.05.mean <- mean(oj.05$len)
-oj.05.s <- sd(oj.05$len)
-oj.05.n <- dim(oj.05)[1]
-oj.05.mean + c(-1, 1) * qt(.975, oj.05.n-1) * oj.05.s / sqrt(oj.05.n)
-```
+From this, we can see that the supplement OJ leads to more growth than the supplement VC for doses of 0.5 and 1.0 since the lower bound of the confidence interval for OJ is larger than the upper bound of the confidence interval for VC.  For a dosage of 2.0, the corresponding intervals overlap, and, hence, we see no significance difference in performance between VC and OJ.
+
+By comparing the intervals, we also see that, for the supplement VC, a dose of 1.0 leads to significantly more growth than a dose of 0.5, and a dose of 2.0 leads to significantly more growth than a dose of 1.0.  Similarly, for the supplement OJ, a dose of 1.0 leads to significantly more growth than a dose of 0.5, while a dose of 2.0 does not significantly differ from a dose of 1.0.
