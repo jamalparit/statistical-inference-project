@@ -2,7 +2,7 @@
 title: "Statistical Inference Project: A simulation exercise"
 author: "Paul Reiners"
 date: "January 18, 2015"
-output: html_document
+output: pdf_document
 ---
 
 Overview
