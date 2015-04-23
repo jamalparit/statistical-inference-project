@@ -16,6 +16,9 @@ points(oj.supp$dose, oj.supp$len,
 lines(lowess(oj.supp$len~oj.supp$dose), col=2)
 ```
 
+In the graph above, note that the black dots (and line) represent VC, while the
+red dots (and line) represent OJ.
+
 We can see that as the dosage is increased, the tooth growth increases.  We can also see that for dosages of 0.5 and 1.0, OJ causes more tooth growth than VC.  For a dose of 2.0, the growth seems about the same.
 
 Let's look at the six 95% confidence intervals over supp type and dosage.
