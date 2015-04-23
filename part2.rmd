@@ -2,7 +2,7 @@
 title: "Basic inferential data analysis"
 author: "Paul Reiners"
 date: "Tuesday, January 20, 2015"
-output: html_document
+output: pdf_document
 ---
 
 ```{r}
