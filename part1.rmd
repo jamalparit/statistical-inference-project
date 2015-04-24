@@ -12,23 +12,14 @@ In this project, we will illustrate how the Central Limit Theorem holds for the 
 Simulations
 -----------
 
-Compare the distribution of 1000 exponentials
-
-```{r}
-lambda <- 0.2
-n <- 1000
-hist(rexp(n, lambda))
-```
-
-and the distribution of 1000 averages of 40 exponentials
+We will compute 1000 averages of 40 exponentials
 
 ```{r}
 mns = NULL
-for (i in 1 : 1000) mns = c(mns, mean(rexp(40, lambda)))
-hist(mns)
+lambda <- 0.2
+n <- 1000
+for (i in 1 : n) mns = c(mns, mean(rexp(40, lambda)))
 ```
-
-Notice how the distribution of the 1000 **averages** of random exponentials appears to be approximately normal.  Also note that its mean appears to be the mean of the 1000 generated random exponentials.
 
 Sample Mean versus Theoretical Mean
 -----------------------------------
@@ -88,13 +79,12 @@ They also differ by less than 1%:
 abs(sample.var - theoretical.var) / theoretical.var
 ```
 
-Let's graph this adding light blue for the statistical standard deviation and light red for the theoretical standard deviation.
+Let's graph this using red for the sample standard deviation and red for the theoretical standard deviation.
 
 ```{r}
-hist(mns)
-abline(v = sample.mean, col = "blue", lwd = 2)
-abline(v = theoretical.mean, col = "red", lwd = 2)
-abline(v = sample.mean + sqrt(sample.var), col = "green", lwd = 2)
+hist(vars)
+abline(v = sample.var, col = "blue", lwd = 2)
+abline(v = theoretical.var, col = "red", lwd = 2)
 ```
 
 Distribution
@@ -102,20 +92,19 @@ Distribution
 
 We now illustrate that the distribution is approximately standard normal.
 
-```{r}
+```{r, echo=FALSE}
 library("ggplot2")
+```
+```{r}
 nosim <- 1000
 cfunc <- function(x, n) sqrt(n) * (mean(x) - theoretical.mean) / sqrt(theoretical.var) 
 dat <- data.frame(
-  x = c(apply(matrix(rexp(nosim * 10, lambda), 
-                     nosim), 1, cfunc, 10),
-        apply(matrix(rexp(nosim * 20, lambda), 
-                     nosim), 1, cfunc, 20),
-        apply(matrix(rexp(nosim * 40, lambda), 
-                     nosim), 1, cfunc, 40)
-        ),
+  x = c(apply(matrix(rexp(nosim * 10, lambda), nosim), 1, cfunc, 10),
+        apply(matrix(rexp(nosim * 20, lambda), nosim), 1, cfunc, 20),
+        apply(matrix(rexp(nosim * 40, lambda), nosim), 1, cfunc, 40)),
   size = factor(rep(c(10, 20, 40), rep(nosim, 3))))
-g <- ggplot(dat, aes(x = x, fill = size)) + geom_histogram(binwidth=.3, colour = "black", aes(y = ..density..)) 
+g <- ggplot(dat, aes(x = x, fill = size)) + 
+  geom_histogram(binwidth=.3, colour = "black", aes(y = ..density..)) 
 g <- g + stat_function(fun = dnorm, size = 2)
 g + facet_grid(. ~ size)
 ```
